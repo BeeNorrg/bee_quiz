@@ -1,3 +1,17 @@
 .column {
     border: 1px solid black;
 }
+
+#bodyBox {
+    margin-top:100px;
+    min-height:600px;
+    min-width:400px;
+}
+
+#headerTitle {
+    background-color:blue;
+    margin:5px auto;
+    max-height:100px;
+    color:white;
+    font-size:xx-large;
+}

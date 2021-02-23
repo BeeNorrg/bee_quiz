@@ -32,3 +32,5 @@ $("#start").click(function replacer () {
 
 //starts the quiz timer
 $("#start").click(countDown());
+
+

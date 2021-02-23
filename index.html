@@ -11,27 +11,37 @@
     <title>What is this, a quiz for bees!?</title>
 </head>
 <body>
-    <div class="columns">
+    <main class="columns">
         <!-- Column for my columns -->
          <div class="column">
-             
+            
             <div class="columns">
-                
-                <div class="column">
+                <!-- Empty Column -->
+                <div class="column is-one-fifth"></div>
+                <!-- Quiz Column -->
+                <section class="column">
+                    <div class="box is-rounded" id="bodyBox">
+                        <header class="box has-text-centered is-rounded" id="headerTitle">Bee Quiz!</header>
+                        <article class="content" id="quizContent">
+                            <!-- QUIZ APPENDS HERE -->
+                            <span id="quiz"></span>
+                        </article>
+                    </div>
+                </section>
+                <!-- Empty Column -->
+                <div class="column is-one-fifth"></div>
+            </div>
+            <section class="level">
+                <div class="level-item">
+                    <!-- quiz start button -->
+                    <button class="button getsReplaced" id="start">Start Quiz!</button>
+                </div>
+            </section>
+            <footer>
 
-                </div>
-                
-                <div class="column">
-                    
-                </div>
-            </div>
-        <footer class="level">
-            <div class="level-item">
-                <button class="button getsReplaced" id="start">Start Quiz!</button>
-            </div>
-        </footer>
+            </footer>
         </div>
-    </div>
+    </main>
     <!-- jQuery link -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- javascript link -->
