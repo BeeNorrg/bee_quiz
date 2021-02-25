@@ -5,6 +5,9 @@ function countDown() {
   setInterval(function() {
     document.getElementById("timer").innerHTML = minute + " : " + sec;
     sec--;
+    if (sec < 10) {
+      document.getElementById("timer").innerHTML = minute + " : " + "0" + sec;
+    }
     if (sec == 00) {
       minute --;
       sec = 59;
@@ -15,25 +18,42 @@ function countDown() {
   }, 1000);
 };
 
-//quiz questions array of question objects
-let questions = [ 
-{"q1":"How can you tell different species of honey bees apart?", 
-"a1":["how many stripes they have", "the sound they make", "what flowers they make honey out of"]},
-{"q2":"What do honey bees eat?",
-"a2":["honey, duh!", "pollen", "smaller insects"]},
-{"q3":"why are honey bees going extinct in north america?",
-"a3":["agricultural pollution", "climate change", "invasive wasp species"]},
-];
+//quiz questions variables
+const question1 = {
+q:"How do you tell different species of honey bees apart?", a:["how many stripes they have", "the sound they make", "the size of their stinger", 
+"what flowers they make honey out of",]};
+const question2 = {
+q:"What do honey bees eat?", a:["honey, duh!", "pollen", "smaller insects", "flowers"]};
+const question3 = {
+q:"why are honey bees going extinct in north america?", a:["industrial pesticides", "climate change", "invasive wasp species", "all of the above"]};
 
-//replaces "Start Quiz!" button with timer
-$("#start").click(function replacer () {
-  $("button.getsReplaced").replaceWith( "<p> you have<span id='timer'> 5:00 </span>remaining! </p>");
+//variable to listen for start button being pressed
+const start = document.getElementById("start");
+//variable to listen for a question being answered
+//const chosenAnswer = document.getElementsByClassName("answerButton");
+//HTML table that the quiz will be in
+const quizBlock = "<table class='table'><thead id='questionText'></thead><tbody><tfoot></tfoot><tr><td><button class='button is-primary answerButton'>A</button></td><td id='answerA'></td></tr><tr><td><button class='button is-primary answerButton'>B</button></td><td id='answerB'></td></tr><tr><td><button class='button is-primary answerButton'>C</button></td><td id='answerC'></td></tr> <tr><td><button class='button is-primary answerButton'>D</button></td><td id='answerD'></td></tr></tbody></table>";
+
+//eventlistener to start the quiz timer
+start.addEventListener('click', function () {
+  $("button.getsReplaced").replaceWith("<p> you have<span id='timer'> 2 : 00 </span>remaining! </p>");
+  countDown();
 });
-
-//button also starts the quiz timer
-$("#start").click(countDown());
-
-//the first question is appended to the bodyBox when button is pressed
-$("start").click(function appendQuiz() {
-  $("#quiz").append("<div class='question'>" + questions.q1,"</div>")
+//eventlistener to post first question
+start.addEventListener('click', function() {
+  $("#quiz").append("<div>" + quizBlock + "</div>");
+  $("#questionText").append("<span>" + question1.q + "</span>");
+  for (i=0; i <= question1.a.length; i++) {
+    if (i=1) {
+      $("#answerA").append(question1.a[0])
+    } if (i=2) {
+      $("#answerB").append(question1.a[1])
+    } if (i=3) {
+      $("#answerC").append(question1.a[2])
+    } if (i=4) {
+      $("answerD").append(question1.a[3])
+    };
+  };
 });
+//eventlistener to check if a question has been answered 
+//chosenAnswer.addEventListener('click', function nextQuestion () {});

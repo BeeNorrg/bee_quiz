@@ -8,6 +8,11 @@
     min-width:400px;
 }
 
+#qContent {
+    min-height:400px;
+    min-width:400px;
+}
+
 #headerTitle {
     background-color:blue;
     margin:5px auto;
@@ -15,3 +20,5 @@
     color:white;
     font-size:xx-large;
 }
+
+
