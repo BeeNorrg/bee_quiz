@@ -32,7 +32,7 @@ const start = document.getElementById("start");
 //variable to listen for a question being answered
 //const chosenAnswer = document.getElementsByClassName("answerButton");
 //HTML table that the quiz will be in
-const quizBlock = "<table class='table'><thead id='questionText'></thead><tbody><tfoot></tfoot><tr><td><button class='button is-primary answerButton'>A</button></td><td id='answerA'></td></tr><tr><td><button class='button is-primary answerButton'>B</button></td><td id='answerB'></td></tr><tr><td><button class='button is-primary answerButton'>C</button></td><td id='answerC'></td></tr> <tr><td><button class='button is-primary answerButton'>D</button></td><td id='answerD'></td></tr></tbody></table>";
+const quizBlock = "<button class='button is-primary answerButton'>A</button><p id='answerA'></p><button class='button is-primary answerButton'>B</button><p id='answerB'></p><button class='button is-primary answerButton'>C</button><p id='answerC'></p><button class='button is-primary answerButton'>D</button><p id='answerD'></p>";
 
 //eventlistener to start the quiz timer
 start.addEventListener('click', function () {
