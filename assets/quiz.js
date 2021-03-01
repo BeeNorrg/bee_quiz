@@ -34,7 +34,7 @@ const start = document.getElementById("start");
 //variable to listen for the "submit answer" button being pressed
 const submit = document.getElementById("nextButton");
 //varaible to store whether or not a question has been answered
-const answerButton = doecument.getElementsbyClassName("quizButton")
+const answerButton = document.getElementsByClassName("quizButton")
 //object to initialize the quiz's html
 const qHTML = {
 buttons:["<button class='button is-primary quizButton'>A</button>","<button class='button is-primary quizButton'>B</button>","<button class='button is-primary quizButton'>C</button>","<button class='button is-primary quizButton'>D</button>"],
@@ -48,7 +48,7 @@ start.addEventListener("click", function startTimer() {
 });
 //eventlistener to post first question
 start.addEventListener('click', function startQuiz() {
-  $("#quiz").append("<div class='qTitle'>" + question1.q + "</div>");
+  $("#qTitle").append(question1.q);
   for (i=1; i <= 4; i++) {
     $("#quiz").append("<div class='quizDiv' id='a" + i  +"'></div>");
     if (i===1) {
@@ -72,11 +72,54 @@ start.addEventListener('click', function startQuiz() {
     } else if (i===3) {
       $("#answerD").append(question1.a[3])
     };
-  };
-  // shows we're on the first question
-  const ready1 = true;
+  };  
 });
 
+let ready1 = true;
 
+quizButton.addEventListener("click", function() {
+  $("#qTitle").replaceWith(question2.q);
+  const answered = true;
+  if (answered === true) {
+    const answered = false;
+  };
+  if (answered === false) {
+    const answered = true;
+  };
+});
+
+submit.addEventListener("click", function nextQuestion() {
+  if (ready1 === true) {
+    $("#qTitle").replaceWith(question2.q);
+    let ready1 = false;
+    let ready2 = true;
+    for (i=0; i < question2.a.length; i++) {
+      if (i===0) {
+        $("#answerA").replaceWith(question2.a[0])
+      } if (i===1) {
+        $("#answerB").replaceWith(question2.a[1])
+      } if (i===2) {
+        $("#answerC").replaceWith(question2.a[2])
+      } else if (i===3) {
+        $("#answerD").replaceWith(question2.a[3])
+      };
+    };
+  } else if (ready2 === true) {
+    $("#qTitle").replaceWith(question3.q);
+    const ready2 = false;
+    const ready3 = true;
+    for (i=0; i < question2.a.length; i++) {
+      if (i===0) {
+        $("#answerA").replaceWith(question3.a[0])
+      } if (i===1) {
+        $("#answerB").replaceWith(question3.a[1])
+      } if (i===2) {
+        $("#answerC").replaceWith(question3.a[2])
+      } else if (i===3) {
+        $("#answerD").replaceWith(question3.a[3])
+      };
+    };
+  };
+});
 
 
