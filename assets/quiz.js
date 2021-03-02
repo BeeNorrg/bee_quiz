@@ -28,98 +28,95 @@ const question2 = {
 q:"What do honey bees eat?", a:["honey, duh!", "pollen", "smaller insects", "flowers"]};
 const question3 = {
 q:"why are honey bees going extinct in north america?", a:["industrial pesticides", "climate change", "invasive wasp species", "all of the above"]};
-
 //variable to listen for start button being pressed
 const start = document.getElementById("start");
-//variable to listen for the "submit answer" button being pressed
-const submit = document.getElementById("nextButton");
-//varaible to store whether or not a question has been answered
-const answerButton = document.getElementsByClassName("quizButton")
+console.log(start);
 //object to initialize the quiz's html
 const qHTML = {
 buttons:["<button class='button is-primary quizButton'>A</button>","<button class='button is-primary quizButton'>B</button>","<button class='button is-primary quizButton'>C</button>","<button class='button is-primary quizButton'>D</button>"],
 answerDivs:["<p id='answerA'></p>","<p id='answerB'></p>","<p id='answerC'></p>","<p id='answerD'></p>"]
 };
 
-//eventlistener to start the quiz timer
-start.addEventListener("click", function startTimer() {
-  $("button.getsReplaced").replaceWith("<p> you have<span id='timer'> 2 : 00 </span>remaining! </p>");
-  countDown();
-});
-//eventlistener to post first question
-start.addEventListener('click', function startQuiz() {
-  $("#qTitle").append(question1.q);
-  for (i=1; i <= 4; i++) {
-    $("#quiz").append("<div class='quizDiv' id='a" + i  +"'></div>");
-    if (i===1) {
-      $("#a1").append(qHTML.buttons[0]  + qHTML.answerDivs[0])
-    } if (i===2) {
-      $("#a2").append(qHTML.buttons[1] + qHTML.answerDivs[1])
-    } if (i===3) {
-      $("#a3").append(qHTML.buttons[2] + qHTML.answerDivs[2])
-    } if (i===4) {
-      $("#a4").append(qHTML.buttons[3] + qHTML.answerDivs[3])
-    };
-  };
-  // Populates the answer divs with question 1 answers
-  for (i=0; i <= question1.a.length; i++) {
-    if (i===0) {
-      $("#answerA").append(question1.a[0])
-    } if (i===1) {
-      $("#answerB").append(question1.a[1])
-    } if (i===2) {
-      $("#answerC").append(question1.a[2])
-    } else if (i===3) {
-      $("#answerD").append(question1.a[3])
-    };
-  };  
-});
+window.onload = function Quiz () {
 
-let ready1 = true;
+  //eventlistener to start the quiz timer
+  start.addEventListener("click", function startTimer() {
+    $("button.getsReplaced").replaceWith("<p> you have<span id='timer'> 2 : 00 </span>remaining! </p>");
+    countDown();
+  });
 
-quizButton.addEventListener("click", function() {
-  $("#qTitle").replaceWith(question2.q);
-  const answered = true;
-  if (answered === true) {
-    const answered = false;
-  };
-  if (answered === false) {
-    const answered = true;
-  };
-});
 
-submit.addEventListener("click", function nextQuestion() {
-  if (ready1 === true) {
-    $("#qTitle").replaceWith(question2.q);
-    let ready1 = false;
-    let ready2 = true;
-    for (i=0; i < question2.a.length; i++) {
-      if (i===0) {
-        $("#answerA").replaceWith(question2.a[0])
-      } if (i===1) {
-        $("#answerB").replaceWith(question2.a[1])
+  start.addEventListener('click', function startQuiz() {
+    $("#qTitle").append(question1.q);
+    for (i=1; i <= 4; i++) {
+      $("#quiz").append("<div class='quizDiv' id='a" + i  +"'></div>");
+      if (i===1) {
+        $("#a1").append(qHTML.buttons[0]  + qHTML.answerDivs[0])
       } if (i===2) {
-        $("#answerC").replaceWith(question2.a[2])
-      } else if (i===3) {
-        $("#answerD").replaceWith(question2.a[3])
+        $("#a2").append(qHTML.buttons[1] + qHTML.answerDivs[1])
+      } if (i===3) {
+        $("#a3").append(qHTML.buttons[2] + qHTML.answerDivs[2])
+      } if (i===4) {
+        $("#a4").append(qHTML.buttons[3] + qHTML.answerDivs[3])
       };
     };
-  } else if (ready2 === true) {
-    $("#qTitle").replaceWith(question3.q);
-    const ready2 = false;
-    const ready3 = true;
-    for (i=0; i < question2.a.length; i++) {
+    // Populates the answer divs with question 1 answers
+    for (i=0; i <= question1.a.length; i++) {
       if (i===0) {
-        $("#answerA").replaceWith(question3.a[0])
+        $("#answerA").append(question1.a[0])
       } if (i===1) {
-        $("#answerB").replaceWith(question3.a[1])
+        $("#answerB").append(question1.a[1])
       } if (i===2) {
-        $("#answerC").replaceWith(question3.a[2])
+        $("#answerC").append(question1.a[2])
       } else if (i===3) {
-        $("#answerD").replaceWith(question3.a[3])
+        $("#answerD").append(question1.a[3])
       };
+    };  
+  });
+    //variable to listen for the "submit answer" button being pressed
+    const submit = document.getElementById("nextButton");
+    console.log(submit);
+    //varaible to store whether or not a question has been answered
+    const answerButton = document.getElementsByClassName("quizButton")
+    console.log(answerButton);
+  
+  submit.addEventListener("click", function() {
+    let quizToggle = true;
+    if (quiztoggle = true) {
+      for (i=0; i <= question2.a.length; i++) {
+        if (i===0) {
+          $("#answerA").replaceWith(question2.a[0])
+          console.log(i);
+          } if (i===1) {
+            $("#answerB").replaceWith(question2.a[1])
+            console.log(i);
+            } if (i===2) {
+            $("#answerC").replaceWith(question2.a[2])
+            console.log(i);
+            } else if (i===3) {
+            $("#answerD").replaceWith(question2.a[3])
+            console.log(i);
+          };
+        };
+        let quizToggle = false;
+      } if (quizToggle = false) {
+      for (i=0; i <= question3.a.length; i++) {
+        if (i===0) {
+          $("#answerA").replaceWith(question3.a[0])
+          console.log(i);
+          } if (i===1) {
+            $("#answerB").replaceWith(question3.a[1])
+            console.log(i);
+            } if (i===2) {
+            $("#answerC").replaceWith(question3.a[2])
+            console.log(i);
+            } else if (i===3) {
+            $("#answerD").replaceWith(question3.a[3])
+            console.log(i);
+          };
+        }; 
     };
-  };
-});
-
+  })
+}
+  
 
