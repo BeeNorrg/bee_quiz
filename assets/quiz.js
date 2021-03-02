@@ -82,7 +82,7 @@ window.onload = function Quiz () {
   
   if (quizToggler === true) {
     submit.addEventListener("click", function () {
-      let quizToggler = false;
+      quizToggler = !quizToggler;
       console.log(quizToggler);
       $("#qTitle").replaceWith(question2.q);
       for (i=0; i <= question2.a.length; i++) {
@@ -98,31 +98,32 @@ window.onload = function Quiz () {
         } else if (i===3) {
         $("#answerD").replaceWith(question2.a[3])
         console.log(i);
-      };
-    }; 
-});
-} if (quizToggler === false) {
-  submit.addEventListener("click", function () {
-    let quizToggler = true;
-    console.log(quizToggler);
-    $("#qTitle").replaceWith(question3.q);
-    for (i=0; i <= question3.a.length; i++) {
-      if (i===0) {
-      $("#answerA").replaceWith(question3.a[0])
-      console.log(i);
-      } if (i===1) {
-      $("#answerB").replaceWith(question3.a[1])
-      console.log(i);
-      } if (i===2) {
-      $("#answerC").replaceWith(question3.a[2])
-      console.log(i);
-      } else if (i===3) {
-      $("#answerD").replaceWith(question3.a[3])
-      console.log(i);
-    };
+        };
+      }; 
+    });
   }; 
-  })
-}
+  if (quizToggler === false) {
+    submit.addEventListener("click", function () {
+      quizToggler = !quizToggler;
+      console.log(quizToggler);
+      $("#qTitle").replaceWith(question3.q);
+      for (i=0; i <= question3.a.length; i++) {
+        if (i===0) {
+        $("#answerA").replaceWith(question3.a[0])
+        console.log(i);
+        } if (i===1) {
+        $("#answerB").replaceWith(question3.a[1])
+        console.log(i);
+        } if (i===2) {
+        $("#answerC").replaceWith(question3.a[2])
+        console.log(i);
+        } else if (i===3) {
+        $("#answerD").replaceWith(question3.a[3])
+        console.log(i);
+        };
+      }; 
+    })
+  }
 };
 
   
