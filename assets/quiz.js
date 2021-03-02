@@ -36,7 +36,7 @@ const qHTML = {
 buttons:["<button class='button is-primary quizButton'>A</button>","<button class='button is-primary quizButton'>B</button>","<button class='button is-primary quizButton'>C</button>","<button class='button is-primary quizButton'>D</button>"],
 answerDivs:["<p id='answerA'></p>","<p id='answerB'></p>","<p id='answerC'></p>","<p id='answerD'></p>"]
 };
-
+let quizToggler = true;
 window.onload = function Quiz () {
 
   //eventlistener to start the quiz timer
@@ -80,43 +80,51 @@ window.onload = function Quiz () {
     const answerButton = document.getElementsByClassName("quizButton")
     console.log(answerButton);
   
-  submit.addEventListener("click", function() {
-    let quizToggle = true;
-    if (quiztoggle = true) {
+  if (quizToggler === true) {
+    submit.addEventListener("click", function () {
+      let quizToggler = false;
+      console.log(quizToggler);
+      $("#qTitle").replaceWith(question2.q);
       for (i=0; i <= question2.a.length; i++) {
         if (i===0) {
-          $("#answerA").replaceWith(question2.a[0])
-          console.log(i);
-          } if (i===1) {
-            $("#answerB").replaceWith(question2.a[1])
-            console.log(i);
-            } if (i===2) {
-            $("#answerC").replaceWith(question2.a[2])
-            console.log(i);
-            } else if (i===3) {
-            $("#answerD").replaceWith(question2.a[3])
-            console.log(i);
-          };
-        };
-        let quizToggle = false;
-      } if (quizToggle = false) {
-      for (i=0; i <= question3.a.length; i++) {
-        if (i===0) {
-          $("#answerA").replaceWith(question3.a[0])
-          console.log(i);
-          } if (i===1) {
-            $("#answerB").replaceWith(question3.a[1])
-            console.log(i);
-            } if (i===2) {
-            $("#answerC").replaceWith(question3.a[2])
-            console.log(i);
-            } else if (i===3) {
-            $("#answerD").replaceWith(question3.a[3])
-            console.log(i);
-          };
-        }; 
+        $("#answerA").replaceWith(question2.a[0])
+        console.log(i);
+        } if (i===1) {
+        $("#answerB").replaceWith(question2.a[1])
+        console.log(i);
+        } if (i===2) {
+        $("#answerC").replaceWith(question2.a[2])
+        console.log(i);
+        } else if (i===3) {
+        $("#answerD").replaceWith(question2.a[3])
+        console.log(i);
+      };
+    }; 
+});
+} if (quizToggler === false) {
+  submit.addEventListener("click", function () {
+    let quizToggler = true;
+    console.log(quizToggler);
+    $("#qTitle").replaceWith(question3.q);
+    for (i=0; i <= question3.a.length; i++) {
+      if (i===0) {
+      $("#answerA").replaceWith(question3.a[0])
+      console.log(i);
+      } if (i===1) {
+      $("#answerB").replaceWith(question3.a[1])
+      console.log(i);
+      } if (i===2) {
+      $("#answerC").replaceWith(question3.a[2])
+      console.log(i);
+      } else if (i===3) {
+      $("#answerD").replaceWith(question3.a[3])
+      console.log(i);
     };
+  }; 
   })
 }
+};
+
+  
   
 
