@@ -18,8 +18,10 @@ function countDown() {
   }, 1000);
 };
 
-
-
+//boolean to establish which question should be loaded next
+let quizToggle = false;
+//boolean to establish if we've selected an answer
+let answered = false;
 //quiz questions
 const question1 = {
 q:"How do you tell different species of honey bees apart?", a:["how many stripes they have", "the sound they make", "the size of their stinger", 
@@ -28,17 +30,47 @@ const question2 = {
 q:"What do honey bees eat?", a:["honey, duh!", "pollen", "smaller insects", "flowers"]};
 const question3 = {
 q:"why are honey bees going extinct in north america?", a:["industrial pesticides", "climate change", "invasive wasp species", "all of the above"]};
-//variable to listen for start button being pressed
+//the right answers to each question
+const correctAnswers = [question1.a[0], question2.a[1], question3.a[3]];
+//variable to grab the start button
 const start = document.getElementById("start");
-console.log(start);
-//object to initialize the quiz's html
+//object to contain the quiz's html
 const qHTML = {
-buttons:["<button class='button is-primary quizButton'>A</button>","<button class='button is-primary quizButton'>B</button>","<button class='button is-primary quizButton'>C</button>","<button class='button is-primary quizButton'>D</button>"],
+basicHTML: "<span id='quiz'><div id='qTitle'></div></span>",
+buttons:["<button class='button is-primary quizButton' id='b1'>A</button>","<button class='button is-primary quizButton' id='b2'>B</button>","<button class='button is-primary quizButton' id='b3'>C</button>","<button class='button is-primary quizButton' id='b4'>D</button>"],
 answerDivs:["<p id='answerA'></p>","<p id='answerB'></p>","<p id='answerC'></p>","<p id='answerD'></p>"]
 };
-let quizToggler = true;
-window.onload = function Quiz () {
+function answerCheck () {
+  answered = true;
+  console.log(answered);
+};
+//populates quiz element with buttons and divs to put answer text in
+function quizLoader() {
+  for (i=1; i <= 4; i++) {
+    $("#quiz").append("<div class='quizDiv' id='a" + i  +"'></div>");
+    if (i===1) {
+      $("#a1").append(qHTML.buttons[0]  + qHTML.answerDivs[0])
+    } if (i===2) {
+      $("#a2").append(qHTML.buttons[1] + qHTML.answerDivs[1])
+    } if (i===3) {
+      $("#a3").append(qHTML.buttons[2] + qHTML.answerDivs[2])
+    } if (i===4) {
+      $("#a4").append(qHTML.buttons[3] + qHTML.answerDivs[3])
+    };
+  };
+  //querySelectors for the answer buttons and eventHandlers to set answered to true when you answer a question
+   const button1 = document.querySelector("#b1");
+   button1.addEventListener("click", answerCheck);
+   const button2 = document.querySelector("#b2");
+   button2.addEventListener("click", answerCheck);
+   const button3 = document.querySelector("#b3");
+   button3.addEventListener("click", answerCheck);
+   const button4 = document.querySelector("#b4");
+   button4.addEventListener("click", answerCheck);
+};
 
+//contains almost everything important, executes when the DOM finishes loading
+window.onload = function Quiz () {
   //eventlistener to start the quiz timer
   start.addEventListener("click", function startTimer() {
     $("button.getsReplaced").replaceWith("<p> you have<span id='timer'> 2 : 00 </span>remaining! </p>");
@@ -48,18 +80,7 @@ window.onload = function Quiz () {
 
   start.addEventListener('click', function startQuiz() {
     $("#qTitle").append(question1.q);
-    for (i=1; i <= 4; i++) {
-      $("#quiz").append("<div class='quizDiv' id='a" + i  +"'></div>");
-      if (i===1) {
-        $("#a1").append(qHTML.buttons[0]  + qHTML.answerDivs[0])
-      } if (i===2) {
-        $("#a2").append(qHTML.buttons[1] + qHTML.answerDivs[1])
-      } if (i===3) {
-        $("#a3").append(qHTML.buttons[2] + qHTML.answerDivs[2])
-      } if (i===4) {
-        $("#a4").append(qHTML.buttons[3] + qHTML.answerDivs[3])
-      };
-    };
+    quizLoader()
     // Populates the answer divs with question 1 answers
     for (i=0; i <= question1.a.length; i++) {
       if (i===0) {
@@ -73,57 +94,55 @@ window.onload = function Quiz () {
       };
     };  
   });
-    //variable to listen for the "submit answer" button being pressed
-    const submit = document.getElementById("nextButton");
-    console.log(submit);
-    //varaible to store whether or not a question has been answered
-    const answerButton = document.getElementsByClassName("quizButton")
-    console.log(answerButton);
+   //variable to grab the HTML element for the submit button
+   const submit = document.getElementById("nextButton");
   
-  if (quizToggler === true) {
-    submit.addEventListener("click", function () {
-      quizToggler = !quizToggler;
-      console.log(quizToggler);
-      $("#qTitle").replaceWith(question2.q);
+  //moves to the next question
+  submit.addEventListener("click", function nextQuestion(){
+  //makes it so we can't move to the next question if a question hasn't been answered
+  if (answered === true) {
+  //first thing is setting the value of quizToggle to whatever it currently isn't
+    quizToggle = !quizToggle;
+    console.log(quizToggle);
+  //next we set answered to false because it's a new question and you haven't answered yet
+    answered = false;
+    console.log(answered);
+  //then we remove the quiz element entirely and build it differently depending on the value of quizToggle
+    $("#quiz").remove()
+  //populates quiz with question 2 if toggle is true, or question3 if it's false
+    if (quizToggle === true) {
+      $("#quizContent").append(qHTML.basicHTML);
+      $("#qTitle").append(question2.q);
+      quizLoader();
       for (i=0; i <= question2.a.length; i++) {
         if (i===0) {
-        $("#answerA").replaceWith(question2.a[0])
-        console.log(i);
+          $("#answerA").append(question2.a[0])
         } if (i===1) {
-        $("#answerB").replaceWith(question2.a[1])
-        console.log(i);
+          $("#answerB").append(question2.a[1])
         } if (i===2) {
-        $("#answerC").replaceWith(question2.a[2])
-        console.log(i);
+          $("#answerC").append(question2.a[2])
         } else if (i===3) {
-        $("#answerD").replaceWith(question2.a[3])
-        console.log(i);
+          $("#answerD").append(question2.a[3])
         };
-      }; 
-    });
-  }; 
-  if (quizToggler === false) {
-    submit.addEventListener("click", function () {
-      quizToggler = !quizToggler;
-      console.log(quizToggler);
-      $("#qTitle").replaceWith(question3.q);
+      };  
+    } if (quizToggle === false) {
+      $("#quizContent").append(qHTML.basicHTML);
+      $("#qTitle").append(question3.q);
+      quizLoader();
       for (i=0; i <= question3.a.length; i++) {
         if (i===0) {
-        $("#answerA").replaceWith(question3.a[0])
-        console.log(i);
+          $("#answerA").append(question3.a[0])
         } if (i===1) {
-        $("#answerB").replaceWith(question3.a[1])
-        console.log(i);
+          $("#answerB").append(question3.a[1])
         } if (i===2) {
-        $("#answerC").replaceWith(question3.a[2])
-        console.log(i);
+          $("#answerC").append(question3.a[2])
         } else if (i===3) {
-        $("#answerD").replaceWith(question3.a[3])
-        console.log(i);
+          $("#answerD").append(question3.a[3])
         };
-      }; 
-    })
-  }
+      };  
+    };
+  };
+  });
 };
 
   
