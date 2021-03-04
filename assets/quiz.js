@@ -18,9 +18,12 @@ function countDown() {
   }, 1000);
 };
 
-//boolean to establish which question should be loaded next
+//some handlers to help us know what question we answered last and which one is coming up next
 let quizToggle = false;
-//boolean to establish if we've selected an answer
+let q1Toggle = false;
+let q2Toggle = false;
+let finalQuestionToggle = false;
+//handler to establish if we've selected an answer
 let answered = false;
 //quiz questions
 const question1 = {
@@ -30,9 +33,7 @@ const question2 = {
 q:"What do honey bees eat?", a:["honey, duh!", "pollen", "smaller insects", "flowers"]};
 const question3 = {
 q:"why are honey bees going extinct in north america?", a:["industrial pesticides", "climate change", "invasive wasp species", "all of the above"]};
-//the right answers to each question
-const correctAnswers = [question1.a[0], question2.a[1], question3.a[3]];
-//variable to grab the start button
+ //variable to grab the start button
 const start = document.getElementById("start");
 //object to contain the quiz's html
 const qHTML = {
@@ -40,9 +41,31 @@ basicHTML: "<span id='quiz'><div id='qTitle'></div></span>",
 buttons:["<button class='button is-primary quizButton' id='b1'>A</button>","<button class='button is-primary quizButton' id='b2'>B</button>","<button class='button is-primary quizButton' id='b3'>C</button>","<button class='button is-primary quizButton' id='b4'>D</button>"],
 answerDivs:["<p id='answerA'></p>","<p id='answerB'></p>","<p id='answerC'></p>","<p id='answerD'></p>"]
 };
+const correctAnswers = ['<p id="answerA">how many stripes they have</p>', '<p id="answerB">pollen</p>','<p id="answerD">all of the above</p>'];
+//removess time to the timer when you correctly answer a question
+function addTime () {
+
+};
+//adds time to the timer when you incorrectly answer a question
+function removeTime () {
+
+};
+//if an answer button is pressed, sets answered to true, also checks if answer was correct or not
 function answerCheck () {
   answered = true;
-  console.log(answered);
+  let $this = $(this).html();
+  const aCheck = document.querySelector("#answerA");
+  const bCheck = document.querySelector("#answerB");
+  const cCheck = document.querySelector("#answerC");
+  const dCheck = document.querySelector("#answerD");
+  if (q1Toggle === true && $this === "A") {
+    console.log("you did it!");
+  } else if (q2Toggle === true && $this === "B") {
+    console.log("you did it!");
+  } else if (finalQuestionToggle === true && $this === "D") {
+    console.log("you did it!");
+  }
+  
 };
 //populates quiz element with buttons and divs to put answer text in
 function quizLoader() {
@@ -58,7 +81,7 @@ function quizLoader() {
       $("#a4").append(qHTML.buttons[3] + qHTML.answerDivs[3])
     };
   };
-  //querySelectors for the answer buttons and eventHandlers to set answered to true when you answer a question
+   //querySelectors for the answer buttons and eventHandlers to set answered to true when you answer a question
    const button1 = document.querySelector("#b1");
    button1.addEventListener("click", answerCheck);
    const button2 = document.querySelector("#b2");
@@ -77,10 +100,10 @@ window.onload = function Quiz () {
     countDown();
   });
 
-
   start.addEventListener('click', function startQuiz() {
     $("#qTitle").append(question1.q);
     quizLoader()
+    q1Toggle = true;
     // Populates the answer divs with question 1 answers
     for (i=0; i <= question1.a.length; i++) {
       if (i===0) {
@@ -92,7 +115,7 @@ window.onload = function Quiz () {
       } else if (i===3) {
         $("#answerD").append(question1.a[3])
       };
-    };  
+    }; 
   });
    //variable to grab the HTML element for the submit button
    const submit = document.getElementById("nextButton");
@@ -101,16 +124,20 @@ window.onload = function Quiz () {
   submit.addEventListener("click", function nextQuestion(){
   //makes it so we can't move to the next question if a question hasn't been answered
   if (answered === true) {
-  //first thing is setting the value of quizToggle to whatever it currently isn't
+  //first thing is setting the value of quizToggle to whatever it currently isn't, and setting q1Toggle to false to show we're done with question 1
     quizToggle = !quizToggle;
-    console.log(quizToggle);
+    q1Toggle = false;
   //next we set answered to false because it's a new question and you haven't answered yet
     answered = false;
     console.log(answered);
   //then we remove the quiz element entirely and build it differently depending on the value of quizToggle
     $("#quiz").remove()
   //populates quiz with question 2 if toggle is true, or question3 if it's false
-    if (quizToggle === true) {
+    if (quizToggle === true && q1Toggle === false) {
+      q2Toggle = !q2Toggle;
+      console.log(q2Toggle);
+      finalQuestionToggle = true;
+      console.log(finalQuestionToggle);
       $("#quizContent").append(qHTML.basicHTML);
       $("#qTitle").append(question2.q);
       quizLoader();
@@ -125,10 +152,10 @@ window.onload = function Quiz () {
           $("#answerD").append(question2.a[3])
         };
       };  
-    } if (quizToggle === false) {
+    } if (quizToggle === false && q2Toggle === true) {
       $("#quizContent").append(qHTML.basicHTML);
       $("#qTitle").append(question3.q);
-      quizLoader();
+      quizLoader(); 
       for (i=0; i <= question3.a.length; i++) {
         if (i===0) {
           $("#answerA").append(question3.a[0])
