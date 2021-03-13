@@ -1,23 +1,6 @@
-//Timer Function
-function countDown() {
-  var minute = 1;
-  var sec = 59;
-  setInterval(function() {
-    document.getElementById("timer").innerHTML = minute + " : " + sec;
-    sec--;
-    if (sec < 10) {
-      document.getElementById("timer").innerHTML = minute + " : " + "0" + sec;
-    }
-    if (sec == 00) {
-      minute --;
-      sec = 59;
-      if (minute == 0) {
-        minute = 0;
-      }
-    }
-  }, 1000);
-};
-
+// minute and seconds will be how we track score
+let minute = 1;
+let sec = 59;
 //some handlers to help us know what question we answered last and which one is coming up next
 let quizToggle = false;
 let q1Toggle = false;
@@ -25,6 +8,56 @@ let q2Toggle = false;
 let finalQuestionToggle = false;
 //handler to establish if we've selected an answer
 let answered = false;
+//handlers to check for correct answers
+let correctQs = [false, false, false];
+let q1Correct = correctQs[0];
+let q2Correct = correctQs[1];
+let q3Correct = correctQs[2];
+//handlers to check for wrong answers
+let IncorrectQs = [false, false, false];
+let q1Incorrect = IncorrectQs[0];
+let q2Incorrect = IncorrectQs[1];
+let q3Incorrect = IncorrectQs[2];
+
+//Timer Function
+function countDown() {
+  let timer = setInterval(function() {
+      document.getElementById("timer").innerHTML = " " + minute + " : " + sec + " ";
+        sec--;
+      if (sec < 10) {
+        document.getElementById("timer").innerHTML = " " + minute + " : " + "0" + sec + " ";
+      }
+      //if seconds reach 00, decerement minute by 1 and reset seconds to 59
+      if (sec == 00) {
+        minute --;
+        sec = 59;
+        //if minutes reach 0, don't decrement minute
+        if (minute == 0) {
+          minute = 0;
+        };
+      };
+      //if seconds are greater than 60, increment minute and shave 60 off seconds
+      if (sec >= 60) {
+        minute ++;
+        let secOverSixty = sec - 60;
+        sec = 0 + secOverSixty;
+      };
+      //if seconds are less than 0, decrement minute and fix those negative seconds up
+      if (sec < 00 && minute != 0) {
+        sec += 60;
+        minute --;
+      }
+      if (q1Correct === true) {
+        sec += 20;
+        q1Correct = false;
+      } else if (q1Incorrect === true) {
+        sec -= 20;
+        q1Incorrect = false;
+      }
+    }, 1000);
+    
+  };
+
 //quiz questions
 const question1 = {
 q:"How do you tell different species of honey bees apart?", a:["how many stripes they have", "the sound they make", "the size of their stinger", 
@@ -42,14 +75,7 @@ buttons:["<button class='button is-primary quizButton' id='b1'>A</button>","<but
 answerDivs:["<p id='answerA'></p>","<p id='answerB'></p>","<p id='answerC'></p>","<p id='answerD'></p>"]
 };
 const correctAnswers = ['<p id="answerA">how many stripes they have</p>', '<p id="answerB">pollen</p>','<p id="answerD">all of the above</p>'];
-//removess time to the timer when you correctly answer a question
-function addTime () {
 
-};
-//adds time to the timer when you incorrectly answer a question
-function removeTime () {
-
-};
 //if an answer button is pressed, sets answered to true, also checks if answer was correct or not
 function answerCheck () {
   answered = true;
@@ -58,12 +84,35 @@ function answerCheck () {
   const bCheck = document.querySelector("#answerB");
   const cCheck = document.querySelector("#answerC");
   const dCheck = document.querySelector("#answerD");
+  //checks to see if what you picked for question 1 is true or false
   if (q1Toggle === true && $this === "A") {
-    console.log("you did it!");
-  } else if (q2Toggle === true && $this === "B") {
-    console.log("you did it!");
-  } else if (finalQuestionToggle === true && $this === "D") {
-    console.log("you did it!");
+    q1Correct = !q1Correct;
+    console.log("CORRECT");
+    console.log("q1Correct:", q1Correct);
+  } else if (q1Toggle === true && $this != "A") {
+    q1Incorrect = !q1Incorrect;
+    console.log("q1Incorrect:",q1Incorrect);
+    console.log("WRONG");
+  };
+  //checks to see if what you picked for question 1 is true or false
+  if (q2Toggle === true && $this === "B") {
+    q2Correct = !q2Correct;
+    console.log("q2Correct:", q2Correct);
+    console.log("CORRECT");
+  } else if  (q2Toggle === true && $this != "B") {
+    q2Incorrect = !q2Incorrect;
+    console.log("q12Incorrect:", q2Incorrect);
+    console.log("WRONG")
+  };
+  //checks to see if what you picked for question 1 is true or false
+  if (finalQuestionToggle === true && $this === "D") {
+    q3Correct = !q3Correct;
+    console.log("q3Correct:", q3Correct);
+    console.log("CORRECT");
+  } else if (finalQuestionToggle === true && $this != "D") {
+    q3Incorrect = !q2Incorrect;
+    console.log("q3Incorrect:", q3Incorrect);
+    console.log("WRONG")
   }
   
 };
@@ -122,6 +171,7 @@ window.onload = function Quiz () {
   
   //moves to the next question
   submit.addEventListener("click", function nextQuestion(){
+    console.log("check time:", sec);
   //makes it so we can't move to the next question if a question hasn't been answered
   if (answered === true) {
   //first thing is setting the value of quizToggle to whatever it currently isn't, and setting q1Toggle to false to show we're done with question 1
@@ -129,15 +179,15 @@ window.onload = function Quiz () {
     q1Toggle = false;
   //next we set answered to false because it's a new question and you haven't answered yet
     answered = false;
-    console.log(answered);
+    console.log("answered:", answered);
   //then we remove the quiz element entirely and build it differently depending on the value of quizToggle
     $("#quiz").remove()
   //populates quiz with question 2 if toggle is true, or question3 if it's false
     if (quizToggle === true && q1Toggle === false) {
       q2Toggle = !q2Toggle;
-      console.log(q2Toggle);
+      console.log("q2Toggle", q2Toggle);
       finalQuestionToggle = true;
-      console.log(finalQuestionToggle);
+      console.log("finalQuestionToggle", finalQuestionToggle);
       $("#quizContent").append(qHTML.basicHTML);
       $("#qTitle").append(question2.q);
       quizLoader();
